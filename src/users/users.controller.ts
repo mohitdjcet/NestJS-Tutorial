@@ -1,16 +1,17 @@
 import { Controller, Get } from '@nestjs/common';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
+    constructor( private usersSerices: UsersService){}
     @Get()
     getUsers(){
-        return{
-            success:true,
-            message:"User Found"
-        }
+        return this.usersSerices.getUsers()
     }
-    @Get('profile')
-    getProfile(){
-        return "User Profile"
+    @Get("count")
+    getCount(){
+        return{
+            totalUsers: this.usersSerices.getTotalUser()
+        }
     }
 }
