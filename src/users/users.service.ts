@@ -59,4 +59,23 @@ export class UsersService {
             data:user
         }
     }
+
+    deleteUser(id:number){
+        const index = this.users.findIndex(user => user.id === id);
+
+        if(index === -1){
+            return{
+                success:false,
+                message:"User Not Found"
+            }
+        }
+
+        const deleteUser = this.users[index];
+        this.users.splice(index,1);
+        return{
+            success:true,
+            message:"User Deleted",
+            data: deleteUser,
+        }
+    }
 }
