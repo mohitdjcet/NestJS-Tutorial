@@ -23,4 +23,40 @@ export class UsersService {
     getUserById(id:number){
         return this.users.find(user => user.id === id);
     }
+
+    updateUser(id: number, updateUser:any){
+        const index = this.users.findIndex(user => user.id === id);
+
+        if(index === -1){
+            return{
+                message: "User Not found"
+            }
+        }
+
+        this.users[index]={
+            id,
+            ...updateUser,
+        }
+
+        return{
+            message: "User Update Successfully",
+            data: this.users[index],
+        }
+    }
+
+    pathUser(id:number, updates:any){
+        const user = this.users.find(user => user.id === id);
+
+        if(!user){
+            return{
+                message:"User not found"
+            }
+        }
+        Object.assign(user,updates);
+
+        return{
+            message:"User Updated Successfully",
+            data:user
+        }
+    }
 }
