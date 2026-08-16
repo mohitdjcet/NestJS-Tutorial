@@ -1,57 +1,37 @@
-import { Body, Controller,DefaultValuePipe,Get,Param,ParseBoolPipe,ParseFloatPipe,ParseIntPipe,ParseUUIDPipe,Post, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query} from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { UppercasePipe } from 'src/uppercase/uppercase.pipe';
+import { AgePipe } from 'src/age/age.pipe';
+import { TrimPipe } from 'src/trim/trim.pipe';
 
 @Controller('users')
 export class UsersController {
     constructor(private userService: UsersService){}
 
-    @Post()
-    createUser(@Body() createUserDto:CreateUserDto){
-        return this.userService.createUser(createUserDto);
-    }
-
-    // @Get(':id')
+    // @Get(':name')
     // getUser(
-    //     @Param('id',ParseIntPipe) id:number
+    //     @Param('name',UppercasePipe) name:string
     // ){
     //     return{
-    //         id,
-    //         type: typeof id
+    //         name
     //     }
     // }
 
-    @Get('price/:price')
-    getPrice(
-        @Param('price',ParseFloatPipe) price:number
-    ){
-        return{
-            price,
-            type: typeof price
-        }
-    }
-
-    @Get('active/:active')
-    getActive(
-        @Param('active',ParseBoolPipe) active:boolean
-    ){
-        return{
-            active,
-            type: typeof active
-        }
-    }
+    // @Get('age/:age')
+    // getAge(
+    //     @Param('age',AgePipe) age:number
+    // ){
+    //     return{
+    //         age
+    //     }
+    // }
 
     @Get()
     getUser(
-        @Query(
-            "limit",
-            new DefaultValuePipe(10),
-            ParseIntPipe
-        )
-        limit: number
+        @Query('search',TrimPipe) search:string
     ){
         return{
-            limit
+            search
         }
     }
 }
