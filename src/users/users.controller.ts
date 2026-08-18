@@ -1,37 +1,89 @@
-import { Controller, Get, Param, Query} from '@nestjs/common';
+import { BadRequestException, Body, ConflictException, Controller, ForbiddenException, Get, HttpException, InternalServerErrorException, NotFoundException, Param, Post, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { UppercasePipe } from 'src/uppercase/uppercase.pipe';
-import { AgePipe } from 'src/age/age.pipe';
-import { TrimPipe } from 'src/trim/trim.pipe';
-
 @Controller('users')
 export class UsersController {
     constructor(private userService: UsersService){}
 
-    // @Get(':name')
-    // getUser(
-    //     @Param('name',UppercasePipe) name:string
-    // ){
+    // @Get('test')
+    // testExcep(){
+    //     throw new HttpException(
+    //         "Something went wrong",
+    //         400
+    //     )
+    // }
+
+    // @Get(':id')
+    // getUser(@Param('id') id:string){
+    //     if(isNaN(Number(id))){
+    //         throw new BadRequestException(
+    //             "User ID must be a Number"
+    //         );
+    //     }
     //     return{
-    //         name
+    //         id,
+    //         message: "Valid user Id"
     //     }
     // }
 
-    // @Get('age/:age')
-    // getAge(
-    //     @Param('age',AgePipe) age:number
-    // ){
+
+    // @Get('profile')
+    // getProfile(){
+    //     const isAuth = false;
+
+    //     if(!isAuth){
+    //         throw new UnauthorizedException(
+    //             "Please login first"
+    //         )
+    //     }
     //     return{
-    //         age
+    //         message:"Profile Data"
     //     }
     // }
 
-    @Get()
-    getUser(
-        @Query('search',TrimPipe) search:string
-    ){
-        return{
-            search
+    // @Get('admin')
+    // getAdminData(){
+    //     const isAdmin = false;
+
+    //     if(!isAdmin){
+    //         throw new ForbiddenException(
+    //             "You do not have admin access"
+    //         )
+    //     }
+    //     return{
+    //         message:"Admin Data"
+    //     }
+    // }
+
+    // @Get(':id')
+    // getUser(@Param('id') id:string){
+    //     const user = null;
+
+    //     if(!user){
+    //         throw new NotFoundException(
+    //             "User Not found"
+    //         )
+    //     }
+    //     return user;
+    // }
+
+    @Post()
+    creteUser(@Body() body:any){
+        const existingUser = true;
+
+        if(existingUser){
+            throw new ConflictException(
+                'Email is alredy Exists'
+            )
         }
+        return {
+            messahe:"User creted Successfully"
+        }
+    }
+
+    @Get('server-error')
+    getServerErr(){
+        throw new InternalServerErrorException(
+            "Something went wrong"
+        )
     }
 }
