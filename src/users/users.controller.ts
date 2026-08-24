@@ -1,8 +1,6 @@
 import { Controller, Get, NotFoundException, Param, UseFilters } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { HttpExceptionFilter } from 'src/common/filter/http-exception/http-exception.filter';
 @Controller('users')
-@UseFilters(HttpExceptionFilter)
 export class UsersController {
     constructor(private userService: UsersService){}
 
