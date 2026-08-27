@@ -6,8 +6,6 @@ export class UsersController {
 
     @Get(':id')
     getUser(@Param('id') id:string){
-        throw new NotFoundException(
-            'User not Found'
-        )
+        return "User Found"
     }
 }
