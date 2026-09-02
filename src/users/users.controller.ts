@@ -1,15 +1,17 @@
-import { Controller, Get, NotFoundException, Param, UseFilters, UseGuards } from '@nestjs/common';
+import { Controller, Get, NotFoundException, Param, UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { LoggingInterceptor } from 'src/logging/logging.interceptor';
 @Controller('users')
-@UseGuards(AuthGuard)
+// @UseInterceptors(LoggingInterceptor)
 export class UsersController {
     constructor(private userService: UsersService){}
 
-    @Get('profile')
+    @Get()
     getProfile(){
-        return{
-            message:"Welcome to profile"
-        }
+        return[
+            {id:1, name:"Mohit"},
+            {id:2, name:"Rohit"},
+            {id:3, name:"Amit"}
+        ]
     }
 }

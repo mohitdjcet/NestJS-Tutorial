@@ -2,10 +2,12 @@ import { Controller, Get, NotFoundException, Param, UseFilters } from '@nestjs/c
 
 @Controller('products')
 export class ProductsController {
-        @Get(':id')
-        getProduct(@Param('id') id:string){
-            throw new NotFoundException(
-                'User not Found'
-            )
+        @Get()
+        getProduct(){
+         return[
+            {id:1, name:"Apple"},
+            {id:2, name:"Mac"},
+            {id:3, name:"Samsung"}
+         ]
         }
 }
