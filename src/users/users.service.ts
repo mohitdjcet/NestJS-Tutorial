@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { User } from './user.schema';
 import { CreateUserDto } from './create-user.dto';
 import { error } from 'console';
+import { UpdateUserDto } from './update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -32,5 +33,16 @@ export class UsersService {
             throw new NotFoundException("User not found")
         }
         return user;
+    }
+
+    async update(
+        id:string,
+        updateUserDto: UpdateUserDto
+    ){
+        return this.userModel.findByIdAndUpdate(
+            id,
+            updateUserDto,
+            {new : true}
+        )
     }
 }
