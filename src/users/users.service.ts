@@ -45,4 +45,17 @@ export class UsersService {
             {new : true}
         )
     }
+
+    async remove(id:string){
+        // return this.userModel.findByIdAndDelete(id)
+        const user = await this.userModel.findByIdAndDelete(id)
+
+        if(!user){
+            throw new NotFoundException("User not found")
+        }
+        return {
+            message:"User Deleted Successfully",
+            data:user
+        }
+    }
 }
