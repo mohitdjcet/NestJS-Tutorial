@@ -13,8 +13,22 @@ export class UsersController {
     }
 
     @Get()
-    findAll(){
-        return this.userService.findAll()
+    findAll(
+        @Query('name') name?: string,
+        @Query('email') email?: string,
+        @Query('minAge') minAge?: string,
+        @Query('maxAge') maxAge?: string,
+        @Query('page') page: string="1",
+        @Query('limit') limit: string="10",
+    ){
+        return this.userService.findAll(
+            name,
+            email,
+            minAge? Number(minAge): undefined,
+            maxAge? Number(maxAge) : undefined,
+            Number(page),
+            Number(limit)
+        )
     }
 
     @Get('search')

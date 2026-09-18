@@ -17,8 +17,25 @@ export class UsersService {
         return this.userModel.create(createUserDto)
     }
 
-    async findAll(){
-        return this.userModel.find();
+    async findAll(name?:string,email?:string,minAge?:number,maxAge?:number,page:number=1,limit:number=10){
+        const filter : any = {};
+        if(name){
+            filter.name=name
+        }
+        if(email){
+            filter.email=email
+        }
+        if(minAge || maxAge ){
+            filter.age = {};
+            if(minAge){
+                filter.age.$gte = minAge
+            }
+            if(maxAge){
+                filter.age.$lte = maxAge
+            }
+        }
+        const skip = (page -1)*limit;
+        return this.userModel.find(filter).skip(skip).limit(limit);
     }
 
     async findByEmail(email:string){
