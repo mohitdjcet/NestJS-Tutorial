@@ -13,8 +13,14 @@ export class UsersController {
     }
 
     @Get()
-    findAll(){
-        return this.userService.findAll()
+    findAll(
+        @Query('page') page:string = "1",
+        @Query('limit') limit:string = '10'
+    ){
+        return this.userService.findAll(
+            Number(page),
+            Number(limit)
+        )
     }
 
     @Get('search')

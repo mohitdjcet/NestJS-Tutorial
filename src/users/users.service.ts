@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './user.schema';
 import { CreateUserDto } from './create-user.dto';
-import { error } from 'console';
 import { UpdateUserDto } from './update-user.dto';
 
 @Injectable()
@@ -17,8 +16,22 @@ export class UsersService {
         return this.userModel.create(createUserDto)
     }
 
-    async findAll(){
-        return this.userModel.find();
+    async findAll(page:number,limit:number){
+        const skip = (page-1)*limit;
+        const [users,total] = await Promise.all([
+            this.userModel.find().skip(skip).limit(limit),
+            this.userModel.countDocuments()
+        ])
+        const totalPages = Math.ceil(total/limit);
+        return {
+            data:users,
+            pagination:{
+                total,
+                page,
+                limit,
+                totalPages
+            }
+        }
     }
 
     async findByEmail(email:string){
