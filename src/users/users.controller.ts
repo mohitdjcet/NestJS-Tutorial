@@ -13,8 +13,11 @@ export class UsersController {
     }
 
     @Get()
-    findAll(){
-        return this.userService.findAll()
+    findAll(
+        @Query('sortBy') sortBy:string = 'createdAt',
+        @Query('name') name:string='desc'
+    ){
+        return this.userService.findAll(sortBy,name)
     }
 
     @Get('search')

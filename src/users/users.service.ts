@@ -17,8 +17,12 @@ export class UsersService {
         return this.userModel.create(createUserDto)
     }
 
-    async findAll(){
-        return this.userModel.find();
+    async findAll(
+        sortBy:string = 'createdAt',
+        name:string = 'desc'
+    ){
+        const sortName = name === 'asc'? 1 : -1
+        return this.userModel.find().sort({ [sortBy]: sortName})
     }
 
     async findByEmail(email:string){
