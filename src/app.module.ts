@@ -1,15 +1,20 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MongooseModule } from '@nestjs/mongoose';
-import { UsersModule } from './users/users.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb://localhost:27017/myApp'
-    ),
-    UsersModule
+    TypeOrmModule.forRoot({
+      type:"postgres",
+      host:"localhost",
+      port:5432,
+      username:"postgres",
+      password:"Mohit12345",
+      database:"nestjs_course",
+      autoLoadEntities:true,
+      synchronize:true,
+    })
   ],
   controllers: [AppController],
   providers: [AppService],
