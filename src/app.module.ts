@@ -6,10 +6,16 @@ import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
+const environment = process.env.NODE_ENV || "development"
+
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal:true
+      isGlobal:true,
+      envFilePath:[
+        `.env.${environment}`,
+        ".env"
+      ]
     }),
     TypeOrmModule.forRootAsync({
       inject:[ConfigService],
