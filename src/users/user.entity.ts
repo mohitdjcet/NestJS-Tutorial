@@ -11,12 +11,6 @@ export class User{
     @Column({unique:true})
     email!: string;
 
-    @Column({default:18,nullable:true})
-    age!: number;
-
-    @CreateDateColumn()
-    createAt!: Date;
-
-    @UpdateDateColumn()
-    updatedAt!:Date;
+    @Column({select:false, nullable:true})
+    password!: string;
 }
