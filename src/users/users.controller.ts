@@ -40,4 +40,13 @@ export class UsersController {
             }
         }
     }
+
+    @UseGuards(JwtAuthGuard)
+    @Get('dashboard')
+    getDash(@Req() request: AuthenticatedRequest){
+        return{
+            message:"Welcome to your Dashboard Page",
+            userId: request.user.sub,
+        }
+    }
 }
