@@ -61,7 +61,8 @@ export class UsersService {
       }
       const paylod = {
         sub:user.id,
-        email:user.email
+        email:user.email,
+        role:user.role
       }
       const accessToken = await this.jwtService.signAsync(paylod)
       return{
@@ -70,7 +71,8 @@ export class UsersService {
         user:{
           id:user.id,
           name:user.name,
-          email:user.email
+          email:user.email,
+          role:user.role
         }
       }
     }

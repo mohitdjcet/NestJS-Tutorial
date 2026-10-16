@@ -13,4 +13,7 @@ export class User{
 
     @Column({select:false, nullable:true})
     password!: string;
+
+    @Column({type:'varchar', default:'user'})
+    role!:string
 }

@@ -3,6 +3,8 @@ import { UsersService } from './users.service';
 import { RegiterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/jwt-auth/roles.guard';
+import { Roles } from 'src/auth/jwt-auth/roles.decorator';
 
 type AuthenticatedRequest = Request & {
     user:{
@@ -47,6 +49,16 @@ export class UsersController {
         return{
             message:"Welcome to your Dashboard Page",
             userId: request.user.sub,
+        }
+    }
+
+    @UseGuards(JwtAuthGuard,RolesGuard)
+    @Roles('admin')
+    @Get('adminuser')
+    getAdminData(){
+        return{
+            message:"Welcome Admin",
+            data:"Only Admin can access"
         }
     }
 }
