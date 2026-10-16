@@ -5,12 +5,14 @@ import { Repository } from 'typeorm';
 import { RegiterDto } from './dto/register.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService {
     constructor(
         @InjectRepository(User)
-        private readonly userRepository:Repository<User>
+        private readonly userRepository:Repository<User>,
+        private readonly jwtService:JwtService
     ){}
 
     async register(registerDto:RegiterDto){
@@ -57,8 +59,14 @@ export class UsersService {
           'Invalid Email or Password'
         )
       }
+      const paylod = {
+        sub:user.id,
+        email:user.email
+      }
+      const accessToken = await this.jwtService.signAsync(paylod)
       return{
         message:"Login Successful",
+        access_token: accessToken,
         user:{
           id:user.id,
           name:user.name,
