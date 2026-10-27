@@ -23,6 +23,7 @@
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.2.8",
+    "@nestjs/throttler": "^6.7.1",
     "@types/helmet": "^0.0.48",
     "helmet": "^8.3.0",
     "multer": "^2.5.0",
