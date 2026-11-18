@@ -10,6 +10,9 @@ import { CategoriesModule } from './categories/categories.module';
 import { ProductsModule } from './products/products.module';
 import { CartModule } from './cart/cart.module';
 import { OrdersModule } from './orders/orders.module';
+import { AdminModule } from './admin/admin.module';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { UsersService } from './users/users.service';
 
 @Module({
   imports: [
@@ -37,9 +40,11 @@ import { OrdersModule } from './orders/orders.module';
     CategoriesModule,
     ProductsModule,
     CartModule,
-    OrdersModule
+    OrdersModule,
+    AdminModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,JwtAuthGuard],
+  exports:[JwtAuthGuard]
 })
 export class AppModule {}

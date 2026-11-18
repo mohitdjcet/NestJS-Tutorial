@@ -32,6 +32,14 @@ export class OrderItem {
 
 export const OrderItemSchema = SchemaFactory.createForClass(OrderItem);
 
+export enum OrderStatus{
+  PENDING="PENDING",
+  CONFIRMED = 'CONFIRMED',
+  SHIPPED = 'SHIPPED',
+  DELIVERED = 'DELIVERED',
+  CANCELLED = 'CANCELLED',
+}
+
 @Schema({ timestamps: true })
 export class Order {
   @Prop({
@@ -48,8 +56,9 @@ export class Order {
   totalAmount!: number;
 
   @Prop({
-    enum: ['PENDING', 'CONFIRMED', 'SHIPPED', 'DELIVERED', 'CANCELLED'],
-    default: 'PENDING',
+    type:String,
+    enum: Object.values(OrderStatus),
+    default: OrderStatus.PENDING,
   })
   status!: string;
 }

@@ -4,6 +4,7 @@ import { CategoriesService } from './categories.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Category, CategorySchema } from './schemas/category.schema';
 import { UsersModule } from 'src/users/users.module';
+import { AdminGuard } from 'src/admin/guards/admin/admin.guard';
 
 @Module({
   imports:[

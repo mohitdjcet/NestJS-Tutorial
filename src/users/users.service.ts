@@ -24,4 +24,8 @@ export class UsersService {
     async findById(id:string){
         return this.userModule.findById(id).select('-password');
     }
+
+    async findAll(){
+        return this.userModule.find().select('-password').sort({createdAt:-1})
+    }
 }

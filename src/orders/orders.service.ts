@@ -8,7 +8,7 @@ import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 
 import { Connection, Model, Types } from 'mongoose';
 
-import { Order } from './schemas/order.schema';
+import { Order, OrderStatus } from './schemas/order.schema';
 import { Cart } from 'src/cart/schemas/cart.schema';
 import { Product } from 'src/products/schemas/product.schema';
 
@@ -150,5 +150,32 @@ export class OrdersService {
     }
 
     return order;
+  }
+
+  async findAll(){
+    return this.orderModel.find().populate('user','name email').sort({createdAt:-1})
+  }
+
+  async updateStatus(id:string,status:OrderStatus){
+    if(!Types.ObjectId.isValid(id)){
+      throw new BadRequestException("Invalid Oder ID")
+    }
+    const order = await this.orderModel
+      .findByIdAndUpdate(
+        id,
+        {status},
+        {
+          new:true,
+          runValidators:true
+        }
+      ).populate('user','name email')
+
+      if(!order){
+        throw new NotFoundException("Order not found")
+      }
+      return{
+        message:"Order status updated Successfully",
+        order
+      }
   }
 }
